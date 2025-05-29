@@ -1,5 +1,6 @@
 package com.miapp.notasapi.service;
 
-public class UsuarioService {
+import com.miapp.notasapi.model.Usuario;
 
+public interface UsuarioService extends CrudService<Usuario, Long> {
 }
