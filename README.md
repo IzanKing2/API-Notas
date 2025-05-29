@@ -31,24 +31,24 @@
 ```txt
 com.miapp.notasapi/  
 ├── controller/ # Controladores REST  
-|   ├── UsuarioController.java # Endpoints de usuario
-|   └── NotaController.java # Endpoints de nota
-|
+│   ├── UsuarioController.java # Endpoints de usuario
+│   └── NotaController.java # Endpoints de nota
+│
 ├── service/ # Lógica de negocio  
-|   ├── UsuarioService.java
-|   └── NotaService.java
-|
+│   ├── UsuarioService.java
+│   └── NotaService.java
+│
 ├── repository/ # Acceso a datos  
-|   ├── UsuarioRepository.java
-|   └── NotaRepository.java
-|
+│   ├── UsuarioRepository.java
+│   └── NotaRepository.java
+│
 ├── model/ # Entidades Autor y Libro  
-|   ├── Usuario.java # Entidad usuario
-|   └── Nota.java # Entidad nota
-|
+│   ├── Usuario.java # Entidad usuario
+│   └── Nota.java # Entidad nota
+│
 ├── resources/ # Configuración
-|   └── application.properties
-|
+│   └── application.properties
+│
 ├── README.md
 └── test/ # Pruebas del sistema
 ```
