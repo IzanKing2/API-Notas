@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-NotasapiApplication<notasapi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.miapp.notasapi.NotasapiApplication",
+            "projectName": "notasapi",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
