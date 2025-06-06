@@ -18,6 +18,7 @@ import java.util.List;
 @Transactional
 public class NotaServiceImpl extends AbstractCrudService<Nota, Long> implements NotaService {
 
+    // Logger para registrar eventos en el servicio de Notas.
     private static final Logger log = LoggerFactory.getLogger(NotaServiceImpl.class);
     private final NotaRepository notaRepo;
 

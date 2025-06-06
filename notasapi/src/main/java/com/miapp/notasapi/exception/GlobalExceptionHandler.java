@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     /**
-     * Captura IllegalStateException lanzada desde cualquier controlador
-     * y devuelve HTTP 409 Conflict con el mensaje de error.
+     * Maneja excepciones de tipo ResponseStatusException
+     * @param ex la excepción capturada
+     * @return ResponseEntity con el mensaje de error y el estado HTTP correspondiente
      */
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {

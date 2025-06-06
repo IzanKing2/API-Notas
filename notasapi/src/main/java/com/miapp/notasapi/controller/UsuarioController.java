@@ -34,10 +34,11 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    /** 
-     * GET /api/v1/usuarios → 
-     * lista todos los usuarios 
-    */
+    /**
+     * GET /api/v1/usuarios →
+     * Obtiene todos los usuarios.
+     * @return ResponseEntity con lista de usuarios o 404 Not Found si no hay usuarios
+     */
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {
         log.info("Mostrando todos los usuarios.");
@@ -45,10 +46,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.getAll());
     }
 
-    /** 
-     * GET /api/v1/usuarios/{id} → 
-     * obtiene un entrenador por ID o 404 
-    */
+    /**
+     * GET /api/v1/usuarios/{id} →
+     * Obtiene un usuario por su ID.
+     * @param id ID del usuario a buscar
+     * @return ResponseEntity con el usuario encontrado o 404 Not Found si no existe
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
         log.info("Obteniendo usuario con ID: {}", id);
@@ -60,7 +63,9 @@ public class UsuarioController {
 
     /**
      * GET /api/v1/usuarios/{id}/notas →
-     * Lista todos las notas de un usuario dado.
+     * Obtiene las notas asociadas a un usuario por su ID.
+     * @param id ID del usuario
+     * @return ResponseEntity con la lista de notas del usuario o 404 Not Found si no existe
      */
     @GetMapping("/{id}/notas")
     public ResponseEntity<List<Nota>> getNotas(@PathVariable Long id) {
@@ -74,10 +79,12 @@ public class UsuarioController {
         return ResponseEntity.ok(notas);
     }
     
-    /** 
+    /**
      * POST /api/v1/usuarios → 
-     * crea un nuevo usuario (201 Created) 
-    */
+     * crea un nuevo usuario y devuelve el usuario creado con HTTP 201 Created
+     * @param user Usuario a crear
+     * @return ResponseEntity con el usuario creado
+     */
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody Usuario user) {
         log.info("Creando nuevo usuario: {}", user);
@@ -87,10 +94,13 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    /** 
+    /**
      * PUT /api/v1/usuarios/{id} → 
-     * actualiza un usuario existente o 404 
-    */
+     * Actualiza un usuario existente por su ID.
+     * @param id ID del usuario a actualizar
+     * @param user Usuario con los datos actualizados
+     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no existe
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario user) {
         log.info("Actualizando usuario con ID: {}", id);
@@ -105,8 +115,11 @@ public class UsuarioController {
     }
 
     /**
-     * PUT /api/v1/usuarios/{id}/preserve →
-     * Actualiza únicamente el nombre del Usuario y conserva su lista de notas.
+     * PUT /api/v1/usuarios/{id}/preserve → 
+     * Actualiza el nombre de un usuario y preserva sus notas.
+     * @param id ID del usuario a actualizar
+     * @param user Usuario con el nuevo nombre
+     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no existe
      */
     @PutMapping("/{id}/preserve")
     public ResponseEntity<Usuario> updatePreserve(
@@ -125,10 +138,12 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /** 
+    /**
      * DELETE /api/v1/usuarios/{id} → 
-     * elimina un usuario o 404 
-    */
+     * Elimina un usuario por su ID.
+     * @param id ID del usuario a eliminar
+     * @return ResponseEntity con estado 204 No Content si se eliminó correctamente o 404 Not Found si no existe
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.info("Eliminando usuario con ID: {}", id);

@@ -33,8 +33,12 @@ public class NotaController {
         this.usuarioService = usuarioService;
     }
 
-    // GET /notas
-    // GET /notas?usuarioId=1&order=asc
+    /**
+     * GET /notas → Obtiene todas las notas, opcionalmente filtradas por usuarioId y ordenadas por fechaCreacion
+     * @param usuarioId
+     * @param order
+     * @return List<Nota>
+     */
     @GetMapping
     public List<Nota> getAll(
             @RequestParam(required = false) Long usuarioId,
@@ -47,7 +51,11 @@ public class NotaController {
                 : notaService.getAll();
     }
 
-    // GET /notas/{id}
+    /**
+     * GET /notas/{id} → Obtiene una nota por ID
+     * @param id
+     * @return Nota
+     */
     @GetMapping("/{id}")
     public Nota getById(@PathVariable @Positive Long id) {
         log.info("Obteniendo nota con ID: {}", id);
@@ -55,7 +63,12 @@ public class NotaController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada"));
     }
 
-    // POST /notas?usuarioId=1
+    /**
+     * POST /notas → Crea una nueva nota para un usuario específico
+     * @param usuarioId
+     * @param nota
+     * @return Nota
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Nota create(
@@ -70,7 +83,12 @@ public class NotaController {
         return notaService.save(nota);
     }
 
-    // PUT /notas/{id}
+    /**
+     * PUT /notas/{id} → Actualiza una nota existente por ID
+     * @param id
+     * @param nota
+     * @return Nota
+     */
     @PutMapping("/{id}")
     public Nota update(
             @PathVariable @Positive Long id,
@@ -86,7 +104,10 @@ public class NotaController {
         return notaService.update(id, nota);
     }
 
-    // DELETE /notas/{id}
+    /**
+     * DELETE /notas/{id} → Elimina una nota por ID
+     * @param id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @Positive Long id) {

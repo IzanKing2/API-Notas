@@ -71,10 +71,20 @@ La aplicación utiliza **MySQL** como base de datos. Configura las credenciales 
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/notasapi?useSSL=false&serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=[tu_contraseña]
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
 spring.jpa.hibernate.ddl-auto=update
 ```
+
+### Archivo `.env`
+Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno para configurar el usuario y la contraseña de la base de datos:
+
+```env
+DB_USER=root
+DB_PASSWORD=[tu_contraseña]
+```
+
+Asegúrate de que el archivo `.env` esté correctamente cargado en tu entorno de ejecución.
 
 ### Maven
 Asegúrate de tener configurado **Maven Wrapper** para ejecutar el proyecto:
