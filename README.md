@@ -67,24 +67,14 @@ notasapi/
 ## ⚙️ **Configuración**
 
 ### Base de Datos
-La aplicación utiliza **MySQL** como base de datos. Configura las credenciales en el archivo `application.properties`:
+La aplicación utiliza **MySQL** como base de datos. Configura las credenciales directamente en el archivo `application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/notasapi?useSSL=false&serverTimezone=UTC
-spring.datasource.username=${DB_USER}
-spring.datasource.password=${DB_PASSWORD}
+spring.datasource.username=root
+spring.datasource.password=[tu contraseña]
 spring.jpa.hibernate.ddl-auto=update
 ```
-
-### Archivo `.env`
-Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno para configurar el usuario y la contraseña de la base de datos:
-
-```env
-DB_USER=root
-DB_PASSWORD=[tu_contraseña]
-```
-
-Asegúrate de que el archivo `.env` esté correctamente cargado en tu entorno de ejecución.
 
 ### Maven
 Asegúrate de tener configurado **Maven Wrapper** para ejecutar el proyecto:

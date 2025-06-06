@@ -37,7 +37,9 @@ public class UsuarioController {
     /**
      * GET /api/v1/usuarios →
      * Obtiene todos los usuarios.
-     * @return ResponseEntity con lista de usuarios o 404 Not Found si no hay usuarios
+     * 
+     * @return ResponseEntity con lista de usuarios o 404 Not Found si no hay
+     *         usuarios
      */
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {
@@ -49,6 +51,7 @@ public class UsuarioController {
     /**
      * GET /api/v1/usuarios/{id} →
      * Obtiene un usuario por su ID.
+     * 
      * @param id ID del usuario a buscar
      * @return ResponseEntity con el usuario encontrado o 404 Not Found si no existe
      */
@@ -57,31 +60,34 @@ public class UsuarioController {
         log.info("Obteniendo usuario con ID: {}", id);
         log.debug("GET /api/v1/usuarios/{}", id);
         return usuarioService.getById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build()); // Si no lo encuentra se devuelve 404 Not Found
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build()); // Si no lo encuentra se devuelve 404 Not Found
     }
 
     /**
      * GET /api/v1/usuarios/{id}/notas →
      * Obtiene las notas asociadas a un usuario por su ID.
+     * 
      * @param id ID del usuario
-     * @return ResponseEntity con la lista de notas del usuario o 404 Not Found si no existe
+     * @return ResponseEntity con la lista de notas del usuario o 404 Not Found si
+     *         no existe
      */
     @GetMapping("/{id}/notas")
     public ResponseEntity<List<Nota>> getNotas(@PathVariable Long id) {
         log.info("Obteniendo notas del usuario con ID: {}", id);
         log.debug("GET /api/v1/usuarios/{}/notas", id);
         Usuario user = usuarioService.getById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Entrenador no encontrado con id " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Entrenador no encontrado con id " + id));
         // Devolver la lista de notas asociadas
         List<Nota> notas = user.getNotas();
         return ResponseEntity.ok(notas);
     }
-    
+
     /**
-     * POST /api/v1/usuarios → 
+     * POST /api/v1/usuarios →
      * crea un nuevo usuario y devuelve el usuario creado con HTTP 201 Created
+     * 
      * @param user Usuario a crear
      * @return ResponseEntity con el usuario creado
      */
@@ -95,31 +101,32 @@ public class UsuarioController {
     }
 
     /**
-     * PUT /api/v1/usuarios/{id} → 
+     * PUT /api/v1/usuarios/{id} →
      * Actualiza un usuario existente por su ID.
-     * @param id ID del usuario a actualizar
+     * 
+     * @param id   ID del usuario a actualizar
      * @param user Usuario con los datos actualizados
-     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no existe
+     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no
+     *         existe
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario user) {
-        log.info("Actualizando usuario con ID: {}", id);
-        log.debug("PUT /api/v1/usuarios/{id}", id);
-        log.debug("Request body: {}", user);
-        return usuarioService.getById(id)
-            .map(existing -> { 
-                Usuario updated = usuarioService.update(id, user);
-                return ResponseEntity.ok(updated);
-            })
-            .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioActualizado = usuarioService.update(id, usuario);
+        if (usuarioActualizado != null) {
+            return ResponseEntity.ok(usuarioActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
-     * PUT /api/v1/usuarios/{id}/preserve → 
+     * PUT /api/v1/usuarios/{id}/preserve →
      * Actualiza el nombre de un usuario y preserva sus notas.
-     * @param id ID del usuario a actualizar
+     * 
+     * @param id   ID del usuario a actualizar
      * @param user Usuario con el nuevo nombre
-     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no existe
+     * @return ResponseEntity con el usuario actualizado o 404 Not Found si no
+     *         existe
      */
     @PutMapping("/{id}/preserve")
     public ResponseEntity<Usuario> updatePreserve(
@@ -139,20 +146,20 @@ public class UsuarioController {
     }
 
     /**
-     * DELETE /api/v1/usuarios/{id} → 
+     * DELETE /api/v1/usuarios/{id} →
      * Elimina un usuario por su ID.
+     * 
      * @param id ID del usuario a eliminar
-     * @return ResponseEntity con estado 204 No Content si se eliminó correctamente o 404 Not Found si no existe
+     * @return ResponseEntity con estado 204 No Content si se eliminó correctamente
+     *         o 404 Not Found si no existe
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        log.info("Eliminando usuario con ID: {}", id);
-        log.debug("DELETE /api/v1/usuarios/{}", id);
-        return usuarioService.getById(id)
-                .map(existing -> {
-                    usuarioService.deleteById(id);
-                    return ResponseEntity.noContent().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
+        try {
+            usuarioService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
