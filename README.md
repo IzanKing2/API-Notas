@@ -130,7 +130,7 @@ Ejecuta las pruebas con Maven:
 ## 👨‍💻 **Autores**
 
 **Izan Carlo Celis Afonso**
-[GitHub](https://github.com/izancarlo)
+[GitHub](https://github.com/IzanKing2)
 
 **Diego Lázaro Cádiz Torres**
 [GitHub](https://github.com/Diego12132025)
