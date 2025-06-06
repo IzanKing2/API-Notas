@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.miapp.notasapi.model.Usuario;
 import com.miapp.notasapi.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @Transactional
@@ -13,6 +15,8 @@ import jakarta.transaction.Transactional;
  * Proporciona métodos para gestionar entrenadores en la base de datos.
  */
 public class UsuarioServiceImpl extends AbstractCrudService<Usuario, Long> implements UsuarioService {
+    private static final Logger log = LoggerFactory.getLogger(UsuarioServiceImpl.class);
+
     /**
      * Constructor que inicializa el repositorio de usuarios.
      * 
@@ -29,10 +33,12 @@ public class UsuarioServiceImpl extends AbstractCrudService<Usuario, Long> imple
     @Override
     @Transactional
     public Usuario update(Long id, Usuario user) {
+        log.info("Actualizando usuario con ID: {}", id);
         if (!repo.existsById(id)) {
             throw new IllegalArgumentException("Usuario con ID " + id + " no existe.");
         }
         user.setId(id);
+        log.info("Usuario actualizado: {}", user);
         return repo.save(user);
     }
 }

@@ -40,7 +40,7 @@ public class UsuarioController {
     */
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {
-        log.info("Mostrando todos los usuarios");
+        log.info("Mostrando todos los usuarios.");
         log.debug("GET /api/v1/usuarios");
         return ResponseEntity.ok(usuarioService.getAll());
     }
@@ -51,7 +51,7 @@ public class UsuarioController {
     */
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
-        log.info("Mostrando usuario con id: {}", id);
+        log.info("Obteniendo usuario con ID: {}", id);
         log.debug("GET /api/v1/usuarios/{}", id);
         return usuarioService.getById(id)
             .map(ResponseEntity::ok)
@@ -64,7 +64,7 @@ public class UsuarioController {
      */
     @GetMapping("/{id}/notas")
     public ResponseEntity<List<Nota>> getNotas(@PathVariable Long id) {
-        log.info("Mostrando notas del usuario con el id: {}", id);
+        log.info("Obteniendo notas del usuario con ID: {}", id);
         log.debug("GET /api/v1/usuarios/{}/notas", id);
         Usuario user = usuarioService.getById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -93,7 +93,7 @@ public class UsuarioController {
     */
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario user) {
-        log.info("Modificando entrenador con id: {}", id);
+        log.info("Actualizando usuario con ID: {}", id);
         log.debug("PUT /api/v1/usuarios/{id}", id);
         log.debug("Request body: {}", user);
         return usuarioService.getById(id)
@@ -112,7 +112,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> updatePreserve(
             @PathVariable Long id,
             @RequestBody Usuario user) {
-        log.info("Modificando nombre de usuario, manteniendo notas, id: {}", id);
+        log.info("Actualizando nombre del usuario con ID: {} y preservando notas.", id);
         log.debug("PUT /api/v1/usuarios/{}/preserve", id);
         log.debug("Request body: {}", user);
         return usuarioService.getById(id)
@@ -131,7 +131,7 @@ public class UsuarioController {
     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        log.info("Eliminando usuario con id: {}", id);
+        log.info("Eliminando usuario con ID: {}", id);
         log.debug("DELETE /api/v1/usuarios/{}", id);
         return usuarioService.getById(id)
                 .map(existing -> {

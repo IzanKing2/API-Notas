@@ -39,8 +39,7 @@ public class NotaController {
     public List<Nota> getAll(
             @RequestParam(required = false) Long usuarioId,
             @RequestParam(defaultValue = "desc") String order) {
-        log.info("Mostrando todas las notas");
-        log.debug("GET /api/v1/notas?usuarioId={}&order={}", usuarioId, order);
+        log.info("Obteniendo todas las notas. UsuarioId: {}, Orden: {}", usuarioId, order);
         Sort sort = Sort.by(order.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, "fechaCreacion");
 
         return usuarioId != null
@@ -51,8 +50,7 @@ public class NotaController {
     // GET /notas/{id}
     @GetMapping("/{id}")
     public Nota getById(@PathVariable @Positive Long id) {
-        log.info("Mostrando nota con id: {}", id);
-        log.debug("GET /api/v1/notas/{}", id);
+        log.info("Obteniendo nota con ID: {}", id);
         return notaService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada"));
     }
@@ -63,7 +61,7 @@ public class NotaController {
     public Nota create(
             @RequestParam @Positive Long usuarioId,
             @Valid @RequestBody Nota nota) {
-        log.info("Creando nueva nota para usuarioId: {}", usuarioId);
+        log.info("Creando nueva nota para usuario con ID: {}", usuarioId);
         log.debug("POST /api/v1/notas?usuarioId={}", usuarioId);
         log.debug("Request body: {}", nota);
         Usuario usuario = usuarioService.getById(usuarioId)
@@ -77,7 +75,7 @@ public class NotaController {
     public Nota update(
             @PathVariable @Positive Long id,
             @Valid @RequestBody Nota nota) {
-        log.info("Modificando nota con id: {}", id);
+        log.info("Actualizando nota con ID: {}", id);
         log.debug("PUT /api/v1/notas/{}", id);
         log.debug("Request body: {}", nota);
         Nota existente = notaService.getById(id)
@@ -92,8 +90,7 @@ public class NotaController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @Positive Long id) {
-        log.info("Eliminando nota con id: {}", id);
-        log.debug("DELETE /api/v1/notas/{}", id);
+        log.info("Eliminando nota con ID: {}", id);
         if (!notaService.getById(id).isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada");
         }

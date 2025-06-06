@@ -5,6 +5,8 @@ import com.miapp.notasapi.repository.NotaRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @Transactional
 public class NotaServiceImpl extends AbstractCrudService<Nota, Long> implements NotaService {
 
+    private static final Logger log = LoggerFactory.getLogger(NotaServiceImpl.class);
     private final NotaRepository notaRepo;
 
     public NotaServiceImpl(NotaRepository notaRepo) {
@@ -25,6 +28,7 @@ public class NotaServiceImpl extends AbstractCrudService<Nota, Long> implements 
 
     @Override
     public List<Nota> findByUsuarioId(Long usuarioId, Sort sort) {
+        log.info("Buscando notas del usuario con ID: {} usando orden: {}", usuarioId, sort);
         return notaRepo.findByUsuarioId(usuarioId, sort);
     }
 }
