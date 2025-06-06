@@ -23,12 +23,8 @@ public class UsuarioServiceImpl extends AbstractCrudService<Usuario, Long> imple
     }
 
     /**
-     * Actualiza completamente un Usuario.
-     * Al gestionar la colección de notas, se asegura que Hibernate aplique
-     * correctamente
-     * la eliminación de huérfanos (orphanRemoval). Si la colección 'notas' no se
-     * incluye en la actualización, Hibernate eliminará las notas que ya no estén
-     * asociados al usuario.
+     * Actualiza completamente un Usuario. Al gestionar la colección de notas, se asegura que Hibernate aplique correctamente la eliminación de huérfanos (orphanRemoval). 
+     * Si la colección 'notas' no se incluye en la actualización, Hibernate eliminará las notas que ya no estén asociados al usuario.
      */
     @Override
     @Transactional

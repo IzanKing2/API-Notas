@@ -1,6 +1,7 @@
 package com.miapp.notasapi.controller;
 
 import java.util.List;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
 import com.miapp.notasapi.model.Nota;
 import com.miapp.notasapi.model.Usuario;
 import com.miapp.notasapi.service.UsuarioService;
+
 import ch.qos.logback.classic.Logger;
 
 @RestController
@@ -31,7 +34,10 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    /** GET /api/v1/usuarios → lista todos los usuarios */
+    /** 
+     * GET /api/v1/usuarios → 
+     * lista todos los usuarios 
+    */
     @GetMapping
     public ResponseEntity<List<Usuario>> getAll() {
         log.info("Mostrando todos los usuarios");
@@ -39,7 +45,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.getAll());
     }
 
-    /** GET /api/v1/usuarios/{id} → obtiene un entrenador por ID o 404 */
+    /** 
+     * GET /api/v1/usuarios/{id} → 
+     * obtiene un entrenador por ID o 404 
+    */
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
         log.info("Mostrando usuario con id: {}", id);
@@ -50,7 +59,7 @@ public class UsuarioController {
     }
 
     /**
-     * GET /api/v1/usuarios/{id}/notas
+     * GET /api/v1/usuarios/{id}/notas →
      * Lista todos las notas de un usuario dado.
      */
     @GetMapping("/{id}/notas")
@@ -61,11 +70,14 @@ public class UsuarioController {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Entrenador no encontrado con id " + id));
         // Devolver la lista de notas asociadas
-        //List<Nota> notas = user.getNotas();
-        return null; //ResponseEntity.ok(notas);
+        List<Nota> notas = user.getNotas();
+        return ResponseEntity.ok(notas);
     }
     
-    /** POST /api/v1/usuarios → crea un nuevo usuario (201 Created) */
+    /** 
+     * POST /api/v1/usuarios → 
+     * crea un nuevo usuario (201 Created) 
+    */
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody Usuario user) {
         log.info("Creando nuevo usuario: {}", user);
@@ -75,7 +87,10 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    /** PUT /api/v1/usuarios/{id} → actualiza un usuario existente o 404 */
+    /** 
+     * PUT /api/v1/usuarios/{id} → 
+     * actualiza un usuario existente o 404 
+    */
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario user) {
         log.info("Modificando entrenador con id: {}", id);
@@ -90,7 +105,7 @@ public class UsuarioController {
     }
 
     /**
-     * PUT /api/v1/usuarios/{id}/preserve
+     * PUT /api/v1/usuarios/{id}/preserve →
      * Actualiza únicamente el nombre del Usuario y conserva su lista de notas.
      */
     @PutMapping("/{id}/preserve")
@@ -110,7 +125,10 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /** DELETE /api/v1/usuarios/{id} → elimina un usuario o 404 */
+    /** 
+     * DELETE /api/v1/usuarios/{id} → 
+     * elimina un usuario o 404 
+    */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.info("Eliminando usuario con id: {}", id);

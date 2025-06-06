@@ -1,124 +1,52 @@
 package com.miapp.notasapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-/**
- * Clase que representa un Usuario.
- * Un usuario puede tener múltiples notas.
- */
 @Entity
-@Table(name="usuarios")
+@Table(name = "usuarios")
+@Data // Incluye getters, setters, toString, equals y hashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
-    // Atributos ——————————————————————————————————————
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
 
-    // 1 Usuario → N Notas
-    //@OneToMany(mappedBy = "usuario", // atributo en la otra clase
-    //    cascade = CascadeType.ALL, // borra en cascada
-    //    orphanRemoval = true // elimina huérfanos
-    //)
-    //@JsonIgnore
-    //private List<Nota> notas = new ArrayList<>();
-
-    @Column(unique = true)
+    @Email(message = "Debe ser un email válido")
+    @NotBlank(message = "El email no puede estar vacío")
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @JsonIgnore
     private String passwordHash;
-    // ———————————————————————————————————————————————
 
-    // Constructores —————————————————————————————————
-    public Usuario() {
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Nota> notas = new ArrayList<>();
+
+    public void addNota(Nota nota) {
+        this.notas.add(nota);
+        nota.setUsuario(this);
     }
 
-    public Usuario(String nombre, String email, String passwordHash) {
-        this.nombre = nombre;
-        this.email = email;
-        this.passwordHash = passwordHash;
+    public void removeNota(Nota nota) {
+        this.notas.remove(nota);
+        nota.setUsuario(null);
     }
-    // ———————————————————————————————————————————————
-
-    // Add/Remove ————————————————————————————————————
-    /**
-     * Método para añadir una nota
-     * @param n representa la nota
-     */
-    //public void addNota(Nota n) {
-    //    notas.add(n);
-    //    //n.setUsuario(this);
-    //}
-
-    /**
-     * Método para eliminar una nota
-     * @param n representa la nota
-     */
-    //public void removeNota(Nota n) {
-    //    notas.remove(n);
-    //    //n.setUsuario(null);
-    //}
-    // ——————————————————————————————————————————————
-
-    // Equals y HasCode —————————————————————————————
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario that = (Usuario) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-    // —————————————————————————————————————————————
-
-    // Getters y Setters ———————————————————————————
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-    // —————————————————————————————————————————————
 }
+
