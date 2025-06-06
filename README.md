@@ -67,7 +67,7 @@ notasapi/
 ## ⚙️ **Configuración**
 
 ### Base de Datos
-La aplicación utiliza **MySQL** como base de datos. Configura las credenciales directamente en el archivo `application.properties`:
+> La aplicación utiliza **MySQL** como base de datos. Configura las credenciales directamente en el archivo `application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/notasapi?useSSL=false&serverTimezone=UTC
@@ -117,19 +117,19 @@ Ejecuta las pruebas con Maven:
 ```
 
 ### Colección de Postman
-Importa la colección `📂 Colección- API notas- CRUD, test.postman_collection.json` en **Postman** para probar los endpoints.
+> Importa la colección `📂 Colección- API notas- CRUD, test.postman_collection.json` en **Postman** para probar los endpoints.
 
 ---
 
 ## 📄 **Licencia**
 
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+> Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
 
 ## 👨‍💻 **Autores**
 
-**Izan Carlo Celis Afonso**  
+**Izan Carlo Celis Afonso**
 [GitHub](https://github.com/izancarlo)
 
 **Diego Lázaro Cádiz Torres**
