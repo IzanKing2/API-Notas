@@ -4,8 +4,10 @@ import com.miapp.notasapi.model.Nota;
 import com.miapp.notasapi.model.Usuario;
 import com.miapp.notasapi.service.NotaService;
 import com.miapp.notasapi.service.UsuarioService;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -21,7 +23,7 @@ import java.util.List;
 @Validated
 public class NotaController {
 
-    private static final Logger log = LoggerFactory.getLogger(NotaController.class);
+    private static final Logger log = (Logger) LoggerFactory.getLogger(NotaController.class);
 
     private final NotaService notaService;
     private final UsuarioService usuarioService;
@@ -37,7 +39,8 @@ public class NotaController {
     public List<Nota> getAll(
             @RequestParam(required = false) Long usuarioId,
             @RequestParam(defaultValue = "desc") String order) {
-
+        log.info("Mostrando todas las notas");
+        log.debug("GET /api/v1/notas?usuarioId={}&order={}", usuarioId, order);
         Sort sort = Sort.by(order.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, "fechaCreacion");
 
         return usuarioId != null
@@ -48,6 +51,8 @@ public class NotaController {
     // GET /notas/{id}
     @GetMapping("/{id}")
     public Nota getById(@PathVariable @Positive Long id) {
+        log.info("Mostrando nota con id: {}", id);
+        log.debug("GET /api/v1/notas/{}", id);
         return notaService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada"));
     }
@@ -58,7 +63,9 @@ public class NotaController {
     public Nota create(
             @RequestParam @Positive Long usuarioId,
             @Valid @RequestBody Nota nota) {
-
+        log.info("Creando nueva nota para usuarioId: {}", usuarioId);
+        log.debug("POST /api/v1/notas?usuarioId={}", usuarioId);
+        log.debug("Request body: {}", nota);
         Usuario usuario = usuarioService.getById(usuarioId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
         nota.setUsuario(usuario);
@@ -70,7 +77,9 @@ public class NotaController {
     public Nota update(
             @PathVariable @Positive Long id,
             @Valid @RequestBody Nota nota) {
-
+        log.info("Modificando nota con id: {}", id);
+        log.debug("PUT /api/v1/notas/{}", id);
+        log.debug("Request body: {}", nota);
         Nota existente = notaService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada"));
 
@@ -83,6 +92,8 @@ public class NotaController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable @Positive Long id) {
+        log.info("Eliminando nota con id: {}", id);
+        log.debug("DELETE /api/v1/notas/{}", id);
         if (!notaService.getById(id).isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nota no encontrada");
         }
