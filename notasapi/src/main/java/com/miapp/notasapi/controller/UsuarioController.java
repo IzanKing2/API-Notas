@@ -102,31 +102,6 @@ public class UsuarioController {
     }
 
     /**
-     * POST /api/v1/usuarios →
-     * Registra un nuevo usuario, esperando que se le envíe una contraseña en texto
-     * plano que será hasheada antes de guardar al usuario.
-     * 
-     * @param usuario Objeto Usuario con los datos a registrar
-     * @return ResponseEntity con estado 201 Created si se registra correctamente,
-     *         o 400 Bad Request si la contraseña está vacía
-     */
-    @PostMapping
-    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
-        if (usuario.getPasswordHash() == null || usuario.getPasswordHash().isEmpty()) {
-            return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
-        }
-
-        // Generar el hash de la contraseña
-        String passwordHash = Utils.hashPassword(usuario.getPasswordHash());
-        usuario.setPasswordHash(passwordHash);
-
-        // Guardar el usuario en la base de datos
-        usuarioService.save(usuario);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    /**
      * PUT /api/v1/usuarios/{id} →
      * Actualiza un usuario existente por su ID.
      * 
