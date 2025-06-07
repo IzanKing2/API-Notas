@@ -127,7 +127,7 @@ Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICE
 
 ---
 
-## 👨‍💻 **Autores**
+## 👨‍💻 
 
 **Izan Carlo Celis Afonso**  
 [GitHub](https://github.com/izancarlo)
