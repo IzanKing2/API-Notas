@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.miapp.notasapi.interfaces.Utils;
 import com.miapp.notasapi.model.Nota;
 import com.miapp.notasapi.model.Usuario;
 import com.miapp.notasapi.service.UsuarioService;
@@ -98,6 +99,31 @@ public class UsuarioController {
         log.debug("Request body: {}", user);
         Usuario created = usuarioService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    /**
+     * POST /api/v1/usuarios →
+     * Registra un nuevo usuario, esperando que se le envíe una contraseña en texto
+     * plano que será hasheada antes de guardar al usuario.
+     * 
+     * @param usuario Objeto Usuario con los datos a registrar
+     * @return ResponseEntity con estado 201 Created si se registra correctamente,
+     *         o 400 Bad Request si la contraseña está vacía
+     */
+    @PostMapping
+    public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
+        if (usuario.getPasswordHash() == null || usuario.getPasswordHash().isEmpty()) {
+            return ResponseEntity.badRequest().body("La contraseña no puede estar vacía");
+        }
+
+        // Generar el hash de la contraseña
+        String passwordHash = Utils.hashPassword(usuario.getPasswordHash());
+        usuario.setPasswordHash(passwordHash);
+
+        // Guardar el usuario en la base de datos
+        usuarioService.save(usuario);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**

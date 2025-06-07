@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 public class LoginApp extends JFrame {
 
-    private static final String LOGIN_URL = "http://localhost:8080/api/auth/login";
+    private static final String LOGIN_URL = "http://localhost:8080/api/v2/usuarios";
 
     public LoginApp() {
         new LoginFrame();
