@@ -130,10 +130,12 @@ Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICE
 ## 👨‍💻 **Autores**
 
 **Izan Carlo Celis Afonso**  
-[GitHub](https://github.com/izancarlo)
+[GitHub](https://github.com/izancarlo)  
+> He desarrollado todo lo relacionado con el backend: servicios CRUD de usuarios y notas, así como las pruebas unitarias y las pruebas para Postman.
 
-**Diego Lázaro Cádiz Torres**
-[GitHub](https://github.com/Diego12132025)
+**Diego Lázaro Cádiz Torres**  
+[GitHub](https://github.com/Diego12132025)  
+> Se encarga de la interfaz gráfica utilizando JSwing, enlazando la interfaz con la lógica del backend y creando pruebas unitarias para la interfaz si es necesario.
 
 ---
 
