@@ -135,7 +135,7 @@ Ejecuta las pruebas con Maven:
 
 **Diego Lázaro Cádiz Torres**  
 [GitHub](https://github.com/Diego12132025)  
-> Se encarga de la interfaz gráfica utilizando JSwing, enlazando la interfaz con la lógica del backend y creando pruebas unitarias para la interfaz si es necesario.
+> Se encarga de la interfaces y creando pruebas unitarias para la interfaz si es necesario. Además de crear el `UsuarioControllerV2`
 
 ---
 
